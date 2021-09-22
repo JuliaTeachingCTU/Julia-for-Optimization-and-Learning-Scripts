@@ -1,79 +1,59 @@
 # ------------------------------------------------------------------------------------------
-# Scope of variables
+# Soft Local Scope
 # ------------------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------------------
-# Local scope
-# ------------------------------------------------------------------------------------------
-function f()
-    z = 42
-    return
+for i in 1:2
+    t = 1 + i
+    @show t
 end
 
-f()
+t
 
-z
-
-function f()
-    global z = 42
-    return
+for j in 1:5
+    for i in 1:2
+        @show i + j
+    end
+    i
 end
 
-f()
+s = 0
 
-z
-
-function f()
-    z = 42
-    return z
+for i = 1:10
+    t = 1 + i # new local variable t
+    s = t # assign a new value to the global variable
 end
 
-z = f()
+s
 
-z
-
-
-# ------------------------------------------------------------------------------------------
-# Global scope
-# ------------------------------------------------------------------------------------------
-
-module A
-    a = 1 # a global in A's scope
-    b = 2 # b global in A's scope
+code = """
+s = 0
+for i = 1:10
+    t = 1 + i # new local variable t
+    s = t # new local variable s and warning
 end
+s
+""";
 
-a # errors as Main's global scope is separate from A's
+include_string(Main, code)
 
-using .A: b # make variable b from module A available
+code_local = """
+s = 0
+for i = 1:10
+    t = 1 + i # new local variable t
+    local s = t # assigning a new value to the global variable
+end
+s
+"""
 
-A.a
+code_global = """
+s = 0
+for i = 1:10
+    t = 1 + i # new local variable t
+    global s = t # assigning a new value to the global variable
+end
+s
+"""
 
-b
+include_string(Main, code_global)
 
-b = 4
-
-c = 10
-
-foo(x) = x + c
-
-foo(1)
-
-x = rand(10);
-
-y = rand(10);
-
-f_global() = x .+ y
-
-f_local(x, y) = x .+ y
-
-hcat(f_global(), f_local(x, y))
-
-@time f_global();
-
-@time f_local(x, y);
-
-a, b = 1:10, 11:20;
-
-@time f_local(a, b);
-
-@time f_local(a, b);
+include_string(Main, code_local)
