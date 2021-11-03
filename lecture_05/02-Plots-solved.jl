@@ -97,7 +97,45 @@ plotattr("guide")
 # ---
 # ### Solution:
 
+n = 1000
+t = range(0, 2π; length = n)
 
+fx(t) = cos(3t)
+fy(t) = sin(2t)
+
+#+
+
+linewidth = vcat(
+    range(1, 50; length = n ÷ 2),
+    range(50, 1; length = n - n ÷ 2)
+)
+
+#+
+
+c = palette(:viridis, 2);
+typeof(c)
+
+#+
+
+c = collect(palette(:viridis, 2))
+
+#+
+
+color = vcat(
+    collect(palette(:viridis, n ÷ 2)),
+    collect(palette(:viridis, n - n ÷ 2; rev = true))
+)
+
+#+
+
+plot(fx.(t), fy.(t);
+    linewidth,
+    color,
+    lims = (-1.2, 1.2),
+    legend = false,
+    axis = nothing,
+    border = :none,
+)
 
 # ---
 # 
@@ -130,7 +168,15 @@ plot(sin, x -> sin(2x), 0, 2π, 100; linewidth = 2, label = "")
 # ---
 # ### Solution:
 
+fx(t; a = 4.23, b = 2.35) = (a + b)*cos(t) - b*cos((a/b + 1)*t)
+fy(t; a = 4.23, b = 2.35) = (a + b)*sin(t) - b*sin((a/b + 1)*t)
 
+plot(fx, fy, -15, 20, 500;
+    linewidth = 2,
+    legend = false,
+    axis = nothing,
+    border = :none,
+)
 
 # ---
 # 
@@ -161,7 +207,25 @@ scatter(x, y)
 # ---
 # ### Solution:
 
+x = range(-5, 5; length = 200)
 
+fz(x, y) = x^2*y^2/(x^4 + y^4)
+
+#+ 
+
+kwargs = (
+    color = :viridis,
+    legend = false,
+    cbar = false,
+    axis = nothing,
+    border = :none,
+)
+
+#+ 
+
+contourf(x, x, fz; kwargs...) # or plot(x, x, fz; seriestype = :contourf, kwargs...)
+heatmap(x, x, fz; kwargs...)
+surface(x, x, fz; camera = (25, 65), kwargs...)
 
 # ---
 # 
