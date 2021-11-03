@@ -66,7 +66,14 @@ v
 # ---
 # ### Solution:
 
+v = [1,3,5,7,9]
 
+collect(1:2:9)
+Vector(1:2:9)
+
+v[1] = 4
+v[end-1:end] .= 1
+v
 
 # ---
 # 
@@ -115,7 +122,12 @@ vcat(m, v)
 # ---
 # ### Solution:
 
+v1 = collect(1:2:9)
+v2 = collect(2:2:10)
 
+M = hcat(v1, v2)
+M[3,:] .= 4
+M
 
 # ---
 # 
@@ -156,7 +168,11 @@ fill(1.234, 2, 2)
 # ---
 # ### Solution:
 
+A = zeros(2, 3)
+B = ones(2, 3, 1)
+C = fill(2, 2, 3)
 
+cat(A, B, C; dims = 3)
 
 # ---
 # 
@@ -200,7 +216,15 @@ B = [
 # ---
 # ### Solution:
 
+A = exp.((B .+ 1) .^ 2) ./ 2
 
+A = @. exp((B + 1) ^ 2) / 2
+
+A = zeros(2, 3);
+for i in 1:length(A)
+    A[i] = exp((B[i] + 1)^2)/2
+end
+A
 
 # ---
 # 

@@ -25,7 +25,8 @@ println("The values stored in the tuple are: $a, $b and $c")
 # ---
 # ### Solution:
 
-
+t = ("a", "b", "c", "d")
+a, b, c, d = t
 
 # ---
 # 
