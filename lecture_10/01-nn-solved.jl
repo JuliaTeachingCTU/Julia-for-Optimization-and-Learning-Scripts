@@ -1,24 +1,27 @@
-# Neural networks
-## Prepare data
+# # Neural networks
+# ## Prepare data
 
-```julia
 using RDatasets
 
 iris = dataset("datasets", "iris")
 X = Matrix(iris[:, 1:4])
 y = iris.Species
-```
 
-### Exercise:
-Write the `split` function, which randomly splits the dataset and the labels into training and testing sets. Its input should be the dataset `X` and the labels `y`. It should have four outputs. Include 80% of data in the training set and 20% of data in the testing set by default.
+#### Exercise:
+#Write the `split` function, which randomly splits the dataset and the labels into training 
+#and testing sets. Its input should be the dataset `X` and the labels `y`. It should have 
+#four outputs. Include 80% of data in the training set and 20% of data in the testing set 
+# by default.
+#
+#**Hints:**
+#- Use the `randperm` function from the `Random` package.
+#- While `y` can be assumed to a vector, `X` is a matrix or a more-dimensional array. Then 
+#it is beneficial to use the `selectdim` function to select subindices along the correct 
+#dimension.
+#
+#---
+#### Solution:
 
-**Hints:**
-- Use the `randperm` function from the `Random` package.
-- While `y` can be assumed to a vector, `X` is a matrix or a more-dimensional array. Then it is beneficial to use the `selectdim` function to select subindices along the correct dimension.
-
----
-### Solution:
-```julia
 using Random
 
 function split(X, y::AbstractVector; dims=1, ratio_train=0.8, kwargs...)
@@ -33,18 +36,21 @@ function split(X, y::AbstractVector; dims=1, ratio_train=0.8, kwargs...)
     return selectdim(X, dims, i_train), y[i_train], selectdim(X, dims, i_test), y[i_test]
 end
 
+#+
+
 X_train, y_train, X_test, y_test = split(X, y)
-```
----
 
-### Exercise:
-Write the `normalize` functions as described above. It should have two inputs and two outputs. The keyword argument `dims` should also be included.
+# ---
+# 
+# ### Exercise:
+# Write the `normalize` functions as described above. It should have two inputs and two 
+# outputs. The keyword argument `dims` should also be included.
+# 
+# **Hint**: check the help for the `mean` function.
+# 
+# ---
+# ### Solution:
 
-**Hint**: check the help for the `mean` function.
-
----
-### Solution:
-```julia
 using Statistics
 
 function normalize(X_train, X_test; dims=1, kwargs...)
@@ -54,22 +60,30 @@ function normalize(X_train, X_test; dims=1, kwargs...)
     return (X_train .- col_mean) ./ col_std, (X_test .- col_mean) ./ col_std
 end
 
+#+
+
 X_train, X_test = normalize(X_train, X_test)
-```
----
 
-### Exercise:
-Write the `onehot` function that converts the labels `y` into their one-hot representation. The samples should be along the second dimension. Write the `onecold` function that converts the one-hot representation into the one-cold (original) representation. Both these functions need to have two arguments; the second one is `classes`, which equals `unique(y)`.
+# ---
+# 
+# ### Exercise:
+# Write the `onehot` function that converts the labels `y` into their one-hot 
+# representation. The samples should be along the second dimension. Write the `onecold` 
+# function that converts the one-hot representation into the one-cold (original)
+# representation. Both these functions need to have two arguments; the second one is 
+# `classes`, which equals `unique(y)`.
+# 
+# Write a check that both functions work correctly.
+# 
+# **Hints:**
+# - The one-hot representation for a label has the size equalling to the number of classes. 
+# All entries besides one are zeros.
+# - Since the one-hot representation represents probabilities, the prediction is the class 
+# with the highest probability.
+# 
+# ---
+# ### Solution:
 
-Write a check that both functions work correctly.
-
-**Hints:**
-- The one-hot representation for a label has the size equalling to the number of classes. All entries besides one are zeros.
-- Since the one-hot representation represents probabilities, the prediction is the class with the highest probability.
-
----
-### Solution:
-```julia
 function onehot(y, classes)
     y_onehot = falses(length(classes), length(y))
     for (i, class) in enumerate(classes)
@@ -80,13 +94,13 @@ end
 
 onecold(y, classes) = [classes[argmax(y_col)] for y_col in eachcol(y)]
 
+#+
+
 classes = unique(y)
 isequal(onecold(onehot(y, classes), classes), y)
-```
----
 
+# ---
 
-```julia
 using LinearAlgebra
 
 function prepare_data(X, y; do_normal=true, do_onehot=true, kwargs...)
@@ -106,6 +120,8 @@ function prepare_data(X, y; do_normal=true, do_onehot=true, kwargs...)
     return X_train, y_train, X_test, y_test, classes
 end
 
+#+
+
 Random.seed!(666)
 
 iris = dataset("datasets", "iris")
@@ -114,66 +130,69 @@ y = iris.Species
 
 X_train, y_train, X_test, y_test, classes = prepare_data(X', y; dims=2)
 
+#+
+
 Random.seed!(666)
 aux1 = prepare_data(X, y; dims=1)
+
+#+
+
 Random.seed!(666)
 aux2 = prepare_data(X', y; dims=2)
 
+#+
+
 norm(aux1[1] - aux2[1]')
-```
 
-## Create the network
+# ## Create the network
 
-```julia
 struct SimpleNet{T<:Real}
     W1::Matrix{T}
     b1::Vector{T}
     W2::Matrix{T}
     b2::Vector{T}
 end
-```
 
-### Exercise:
-Write an outer constructor for `SimpleNet`. Its inputs should be three integers representing the input size of the three layers. All matrices should be initialized based on the normal distribution.
+# ### Exercise:
+# Write an outer constructor for `SimpleNet`. Its inputs should be three integers 
+# representing the input size of the three layers. All matrices should be initialized based 
+# on the normal distribution.
+# 
+# **Hint**: think about the representation of the dense layer.
+# 
+# ---
+# ### Solution:
 
-**Hint**: think about the representation of the dense layer.
-
----
-### Solution:
-```julia
 SimpleNet(n1, n2, n3) = SimpleNet(randn(n2, n1), randn(n2), randn(n3, n2), randn(n3))
-```
----
 
-```julia
+# ---
+
 Random.seed!(666)
 m = SimpleNet(size(X_train,1), 5, size(y_train,1))
-```
 
-### Exercise:
-Write a functor `function (m::SimpleNet)(x)` which computes the prediction (forward pass) of the neural network `SimpleNet`.
+# ### Exercise:
+# Write a functor `function (m::SimpleNet)(x)` which computes the prediction (forward pass) 
+# of the neural network `SimpleNet`.
+# 
+# **Bonus**: try to make the functor work for both vectors (one sample) and matrices 
+# (multiple samples) `x`.
+# 
+# ---
+# ### Solution:
 
-**Bonus**: try to make the functor work for both vectors (one sample) and matrices (multiple samples) `x`.
-
----
-### Solution:
-```julia
 function (m::SimpleNet)(x)
     z1 = m.W1*x .+ m.b1
     a1 = max.(z1, 0)
     z2 = m.W2*a1 .+ m.b2
     return exp.(z2) ./ sum(exp.(z2), dims=1)
 end
-```
----
 
-```julia
+# ---
+
 m(X_train[:,1:2]) 
-```
 
-## Train the network
+# ## Train the network
 
-```julia
 function grad(m::SimpleNet, x::AbstractVector, y; ϵ=1e-10)
     z1 = m.W1*x .+ m.b1
     a1 = max.(z1, 0)
@@ -198,21 +217,29 @@ function grad(m::SimpleNet, x::AbstractVector, y; ϵ=1e-10)
     return l, l_W1, l_b1, l_W2, l_b2
 end
 
+#+
+
 g_all = [grad(m, X_train[:,k], y_train[:,k]) for k in 1:size(X_train,2)]
 typeof(g_all)
 
-mean_tuple(d::AbstractArray{<:Tuple}) = Tuple([mean([d[k][i] for k in 1:length(d)]) for i in 1:length(d[1])])
+#+
+
+function mean_tuple(d::AbstractArray{<:Tuple})
+    Tuple([mean([d[k][i] for k in 1:length(d)]) for i in 1:length(d[1])])
+end
+
+#+
 
 g_mean = mean_tuple(g_all)
 typeof(g_mean)
-```
 
-### Exercise:
-Train the network with a gradient descent with stepsize ``\alpha=0.1`` for ``200`` iterations. Save the objective value at each iteration and plot the results.
+# ### Exercise:
+# Train the network with a gradient descent with stepsize ``\alpha=0.1`` for ``200`` 
+# iterations. Save the objective value at each iteration and plot the results.
+# 
+# ---
+# ### Solution:
 
----
-### Solution:
-```julia
 α = 1e-1
 max_iter = 200
 L = zeros(max_iter)
@@ -228,10 +255,9 @@ for iter in 1:max_iter
     m.W2 .-= α*grad_mean[4]
     m.b2 .-= α*grad_mean[5]
 end
-```
----
 
-```julia
+# ---
+
 using Plots
 
 plot(L;
@@ -240,20 +266,17 @@ plot(L;
     label="",
     title="Loss function on the training set"
 )
-```
 
-## Prediction
-### Exercise:
+# ## Prediction
+# ### Exercise:
+# 
+# Write a function which predict the labels for samples. Show the accuracy on both training # and testing sets.
+# 
+# ---
+# ### Solution:
 
-Write a function which predict the labels for samples. Show the accuracy on both training and testing sets.
-
----
-### Solution:
-```julia
 predict(X) = m(X)
 accuracy(X, y) = mean(onecold(predict(X), classes) .== onecold(y, classes))
 
 println("Train accuracy = ", accuracy(X_train, y_train))
 println("Test accuracy = ", accuracy(X_test, y_test))
-```
----
