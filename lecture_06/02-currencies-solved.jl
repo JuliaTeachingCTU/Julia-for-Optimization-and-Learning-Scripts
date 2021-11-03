@@ -66,7 +66,9 @@ Euro(1.5)
 # ---
 # ### Solution:
 
-
+symbol(::Type{Dollar}) = "\$"
+Dollar(1)
+Dollar(1.5)
 
 # ---
 # 
@@ -157,7 +159,16 @@ dlr = convert(Dollar, pnd)
 # ---
 # ### Solution:
 
+function Base.show(io::IO, c::T) where {T <: Currency}
+    val = round(c.value; digits = 2)
+    return print(io, val, " ", symbol(T))
+end
 
+#+
+
+eur = convert(Euro, Dollar(1.3))
+pnd = convert(Pound, eur)
+dlr = convert(Dollar, pnd)
 
 # ---
 # 
@@ -186,6 +197,22 @@ promote(Pound(1.3), Dollar(2.4), Euro(2))
 # ### Solution:
 
 
+struct CzechCrown <: Currency
+    value::Float64
+end
+
+symbol(::Type{CzechCrown}) = "Kč"
+rate(::Type{Euro}, ::Type{CzechCrown}) = 0.038
+
+Base.promote_rule(::Type{CzechCrown}, ::Type{Dollar}) = Dollar
+Base.promote_rule(::Type{CzechCrown}, ::Type{Pound}) = Pound
+
+#+
+
+CzechCrown(2.8)
+dl = convert(Dollar, CzechCrown(64))
+convert(CzechCrown, dl)
+promote(Pound(1.3), Dollar(2.4), Euro(2), CzechCrown(2.8))
 
 # ---
 # 
@@ -236,7 +263,34 @@ CzechCrown.([4.5, 2.4, 16.7, 18.3]) .+ Dollar(12)
 # ---
 # ### Solution:
 
+Base.:-(x::Currency, y::Currency) = -(promote(x, y)...)
+Base.:-(x::T, y::T) where {T <: Currency} = T(x.value - y.value)
 
+#+
+
+Dollar(1.3) - CzechCrown(4.5)
+CzechCrown.([4.5, 2.4, 16.7, 18.3]) .- Dollar(12)
+
+#+
+
+Base.:*(a::Real, x::T) where {T <: Currency} = T(a * x.value)
+Base.:*(x::T, a::Real) where {T <: Currency} = T(a * x.value)
+
+#+
+
+2 * Dollar(1.3) * 0.5
+2 .* CzechCrown.([4.5, 2.4, 16.7, 18.3]) .* 0.5
+
+#+
+
+Base.:/(x::T, a::Real) where {T <: Currency} = T(x.value / a)
+Base.:/(x::Currency, y::Currency) = /(promote(x, y)...)
+Base.:/(x::T, y::T) where {T <: Currency} = x.value / y.value
+
+#+
+
+Dollar(1.3) / 2
+2 .* CzechCrown.([1, 2, 3, 4]) ./ CzechCrown(1)
 
 # ---
 # 

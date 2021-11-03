@@ -171,7 +171,18 @@ Point(1, 2.0)
 # ---
 # ### Solution:
 
+struct Point3D{T <: Real} <: AbstractPoint{T}
+    x::T
+    y::T
+    z::T
+end
 
+coordinates(p::Point3D) = (p.x, p.y, p.z)
+
+#+
+
+Point3D(1, 2, 3)
+Point3D{Float32}(1, 2, 3)
 
 # ---
 # 
@@ -214,11 +225,33 @@ OrderedPair(2,1)
 #
 # **Bonus:** Tuples with elements of the same type can be described by the special type
 # `NTuple{N, T}`, where `N` is the number of elements and `T` their type.
-# 
+
+NTuple{2, Int64} <: Tuple{Int64, Int64}
+
 # ---
 # ### Solution:
 
+struct PointND{N, T <: Real} <: AbstractPoint{T}
+    x::NTuple{N, T}
 
+    function PointND(args::Real...)
+        vals = promote(args...)
+        return new{length(args), eltype(vals)}(vals)
+    end
+end
+
+coordinates(p::PointND) = p.x
+dim(::PointND{N}) where N = N
+
+#+
+
+p = PointND(1, 2)
+dim(p)
+
+#+
+
+p = PointND(1, 2.2, 3, 4.5)
+dim(p)
 
 # ---
 # 
@@ -270,7 +303,31 @@ m("world")
 # ---
 # ### Solution:
 
+Base.@kwdef struct Gauss{T<:Real}
+    μ::T = 0
+    σ::T = 1
 
+    function Gauss(μ::Real, σ::Real)
+        σ^2 > 0 || error("the variance `σ^2` must be positive")
+        pars = promote(μ, σ)
+        return new{eltype(pars)}(pars...)
+    end
+end
+
+(d::Gauss)(x::Real) = exp(-1/2 * ((x - d.μ)/d.σ)^2)/(d.σ * sqrt(2*π))
+
+#+
+
+gauss = Gauss()
+gauss(0)
+
+#+s
+
+step = 0.01
+x = -100:step:100;
+
+sum(Gauss(), x) * step
+sum(Gauss(0.1, 2.3), x) * step
 
 # ---
 # 
