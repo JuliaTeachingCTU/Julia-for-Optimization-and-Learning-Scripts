@@ -27,8 +27,8 @@ df
 
 using CSV
 
-CSV.write("./lecture_05/dataframe.csv", df)
-table = CSV.read("./lecture_05/dataframe.csv", DataFrame; header = true)
+CSV.write(joinpath(pwd(), "lecture_05", "dataframe.csv"), df)
+table = CSV.read(joinpath(pwd(), "lecture_05", "dataframe.csv"), DataFrame; header = true)
 
 #+
 

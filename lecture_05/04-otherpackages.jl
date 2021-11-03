@@ -57,17 +57,17 @@ plot!(D; linewidth = 2, xlabel = "x", ylabel = "pdf(x)")
 
 using BSON
 
-BSON.bson("./lecture_05/test2.bson", a = [1+2im, 3+4im], b = "Hello, World!")
+BSON.bson(joinpath(pwd(), "lecture_05", "test2.bson"), a = [1+2im, 3+4im], b = "Hello, World!")
 
 #+
 
 data = Dict(:a => [1+2im, 3+4im], :b => "Hello, World!")
-BSON.bson("./lecture_05/test1.bson", data)
+BSON.bson(joinpath(pwd(), "lecture_05", "test1.bson"), data)
 
 #+
 
-BSON.load("./lecture_05/test1.bson")
-BSON.load("./lecture_05/test2.bson")
+BSON.load(joinpath(pwd(), "lecture_05", "test1.bson"))
+BSON.load(joinpath(pwd(), "lecture_05", "test2.bson"))
 
 #+
 
@@ -76,8 +76,8 @@ using BSON: @save, @load
 a = [1+2im, 3+4im];
 b = "Hello, World!";
 
-@save "./lecture_05/test.bson" a b # Same as above
-@load "./lecture_05/test.bson" a b # Loads `a` and `b` back into the workspace
+@save joinpath(pwd(), "lecture_05", "test.bson") a b # Same as above
+@load joinpath(pwd(), "lecture_05", "test.bson") a b # Loads `a` and `b` back into the workspace
 
 # ## ProgressMeter.jl
 

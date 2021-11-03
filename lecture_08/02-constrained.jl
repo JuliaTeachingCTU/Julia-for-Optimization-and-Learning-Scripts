@@ -72,7 +72,7 @@ ylims = (-2, 1)
 
 #+
 
-create_anim(f, xs, xlims, ylims, "./lecture_08/anim6.gif";
+create_anim(f, xs, xlims, ylims, joinpath(pwd(), "lecture_08", "anim6.gif");
     xbounds=(x_min[1], x_max[1]),
     ybounds=(x_min[2], x_max[2]),
 )
@@ -81,7 +81,7 @@ create_anim(f, xs, xlims, ylims, "./lecture_08/anim6.gif";
 
 xys = hcat(reshape([xs[:,1:end-1]; ys][:], 2, :), xs[:,end])
 
-create_anim(f, xys, xlims, ylims, "./lecture_08/anim7.gif";
+create_anim(f, xys, xlims, ylims, joinpath(pwd(), "lecture_08", "anim7.gif");
     xbounds=(x_min[1], x_max[1]),
     ybounds=(x_min[2], x_max[2]),
 )

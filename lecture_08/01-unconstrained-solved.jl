@@ -188,7 +188,7 @@ x_gd = optim([], g, [0; -1], 0.1)
 xlims = (-3, 1)
 ylims = (-2, 1)
 
-create_anim(f, x_gd, xlims, ylims, "./lecture_08/anim1.gif")
+create_anim(f, x_gd, xlims, ylims, joinpath(pwd(), "lecture_08", "anim1.gif"))
 
 #+
 
@@ -199,12 +199,12 @@ plot(f_gd, label="", xlabel="Iteration", ylabel="Function value")
 # $\alpha = 0.01$
 
 x_gd = optim([], g, [0; -1], 0.01)
-create_anim(f, x_gd, xlims, ylims, "./lecture_08/anim2.gif")
+create_anim(f, x_gd, xlims, ylims, joinpath(pwd(), "lecture_08", "anim2.gif"))
 
 # $\alpha = 1$
 
 x_gd = optim([], g, [0; -1], 1)
-create_anim(f, x_gd, xlims, ylims, "./lecture_08/anim3.gif")
+create_anim(f, x_gd, xlims, ylims, joinpath(pwd(), "lecture_08", "anim3.gif"))
 
 # ### Adaptive Stepsize
 
@@ -229,7 +229,7 @@ end
 gd = GD(0.1)
 x_opt = optim(f, g, [0;-1], gd)
 
-create_anim(f, x_opt, xlims, ylims, "./lecture_08/anim4.gif")
+create_anim(f, x_opt, xlims, ylims, joinpath(pwd(), "lecture_08", "anim4.gif"))
 
 # ### Exercise: Armijo condition
 # Implement the `Armijo` subclass of the `Step` class. It should have two parameters 
@@ -264,4 +264,4 @@ end
 
 gd = Armijo(1e-4, 1)
 x_opt = optim(f, g, [0;-1], gd)
-create_anim(f, x_opt, xlims, ylims, "./lecture_08/anim5.gif")
+create_anim(f, x_opt, xlims, ylims, joinpath(pwd(), "lecture_08", "anim5.gif"))
