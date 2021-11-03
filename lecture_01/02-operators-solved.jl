@@ -25,7 +25,16 @@ y = 3;
 # ---
 # ### Solution:
 
+x = 4
+p = 5
+y = ((x + 2)^2 - 4)/(x - 2)^(p - 2)
 
+typeof(y)
+typeof((x + 2)^2 - 4)
+typeof((x - 2)^(p - 2))
+
+y_int = ((x + 2)^2 - 4)÷(x - 2)^(p - 2)
+typeof(y_int)
 
 # ---
 # 
@@ -64,7 +73,10 @@ w = Int32(1)
 # ---
 # ### Solution:
 
+xp, yp, zp, wp = promote(x, y, z, w)
+typeof(xp)
 
+promote_type(typeof(x), typeof(y), typeof(z), typeof(w))
 
 # ---
 # 
@@ -87,7 +99,15 @@ x \= 16 # x = x \ 16 = 16 / x
 # ---
 # ### Solution:
 
+x = 5;
+p = 3;
 
+y = (x + 4)^(3/2)/(x + 1)^(p - 1)
+
+y *= 8
+y += 3
+y /= 3
+y -= 1
 
 # ---
 # 
@@ -157,7 +177,12 @@ round(x; sigdigits = 3)
 # ---
 # ### Solution:
 
+x = 1252.1518
 
+ceil(Int64, x)
+floor(Int16, x)
+round(x; digits = 2)
+round(x; sigdigits = 3)
 
 # ---
 # 
@@ -189,3 +214,6 @@ Int64(1.234)
 # 
 # ---
 # ### Solution:
+
+x + y
+x + Rational(y)

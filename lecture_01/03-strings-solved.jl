@@ -60,7 +60,17 @@ print(str)
 # ---
 # ### Solution:
 
+str = """
+    Quotation is the repetition or copy of someone else's statement or thoughts.
+    Quotation marks are punctuation marks used in text to indicate a quotation.
+    Both of these words are sometimes abbreviated as "quote(s)".
+""";
 
+println(str)
+
+str = "    Quotation is the repetition or copy of someone else's statement or thoughts.\n    Quotation marks are punctuation marks used in text to indicate a quotation.\n    Both of these words are sometimes abbreviated as \"quote(s)\".";
+
+println(str)
 
 # ---
 # 
@@ -89,12 +99,15 @@ string("The variable a is of type ", typeof(a), " and its value is ", a)
 #+
 
 "$typeof(a)"
+
 "$(typeof(a))"
 
 #+
 
 myfunc = typeof
+
 "$myfunc(a)"
+
 "$(myfunc(a))"
 
 #+
@@ -125,7 +138,12 @@ b = [:a, :b, :c, :d]
 # ---
 # ### Solution:
 
-
+a = [1,2,3];
+str = string(a, " is a vector of length ",  length(a), " with elements of type ", eltype(a));
+println(str)
+b = [:a, :b, :c, :d];
+str = "$(b) is a vector of length $(length(b)) with elements of type $(eltype(b))";
+println(str)
 
 # ---
 # 
@@ -169,3 +187,5 @@ replace("Sherlock Holmes", "e" => uppercase)
 # 
 # ---
 # ### Solution:
+
+split("Julia!", "")
