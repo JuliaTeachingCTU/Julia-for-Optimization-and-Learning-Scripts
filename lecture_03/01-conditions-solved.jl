@@ -105,7 +105,22 @@ end
 # ---
 # ### Solution:
 
+function fact(n)
+    return if n < 0 | !isinteger(n)
+        error("argument must be non-negative integer")
+    elseif n == 0
+        1
+    else
+        n * fact(n - 1)
+    end
+end
 
+#+
+
+fact(4)
+fact(0)
+fact(-5)
+fact(1.4)
 
 # ---
 # 
@@ -151,3 +166,23 @@ t(1) || f(2) && println(3) # the first expression is evaluated
 #
 # ---
 # ### Solution:
+
+function fact(n)
+    isinteger(n) || error("argument must be non-negative integer")
+    n >= 0 || error("argument must be non-negative integer")
+    return n == 0 ? 1 : n * fact(n - 1)
+end
+
+#+
+
+function fact(n)
+    isinteger(n) && n >= 0 || error("argument must be non-negative integer")
+    return n == 0 ? 1 : n * fact(n - 1)
+end
+
+#+
+
+fact(4)
+fact(0)
+fact(-5)
+fact(1.4)

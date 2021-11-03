@@ -1,6 +1,4 @@
-# ------------------------------------------------------------------------------------------
-# Soft Local Scope
-# ------------------------------------------------------------------------------------------
+# # Soft Local Scope
 
 for i in 1:2
     t = 1 + i
@@ -9,12 +7,16 @@ end
 
 t
 
+#+
+
 for j in 1:5
     for i in 1:2
         @show i + j
     end
     i
 end
+
+#+
 
 s = 0
 
@@ -24,6 +26,8 @@ for i = 1:10
 end
 
 s
+
+#+
 
 code = """
 s = 0
@@ -35,6 +39,8 @@ s
 """;
 
 include_string(Main, code)
+
+#+
 
 code_local = """
 s = 0
@@ -54,6 +60,7 @@ end
 s
 """
 
-include_string(Main, code_global)
+#+
 
+include_string(Main, code_global)
 include_string(Main, code_local)
