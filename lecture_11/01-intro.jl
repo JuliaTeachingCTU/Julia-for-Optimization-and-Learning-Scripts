@@ -1,7 +1,6 @@
-# Introduction to Flux
+# # Introduction to Flux
 
-```julia
-include("./lecture_11/utilities.jl")
+include(joinpath(pwd(), "lecture_11", "utilities.jl"))
 
 using RDatasets
 using Random
@@ -9,15 +8,15 @@ using Random
 Random.seed!(666)
 iris = dataset("datasets", "iris")
 
+#+
+
 X = Matrix(iris[:, 1:4])
 y = iris.Species
 
 X_train, y_train, X_test, y_test, classes = prepare_data(X', y; dims=2)
-```
 
-## Creating the network
+# ## Creating the network
 
-```julia
 using Flux
 
 n_hidden = 5
@@ -27,24 +26,25 @@ m = Chain(
     softmax,
 )
 
+#+
+
 m(X_train)
 params(m[2])[2] .= [-1;0;1]
-```
 
 ## Training the network
 
-```julia
 using Flux: crossentropy
 
 L(x, y) = crossentropy(m(x), y)
 L(X_train, y_train)
 
-ps = params(m)
-grad = gradient(() -> L(X_train, y_train), ps)
-size(grad[X_train])
-```
+#+
 
-```julia
+grad = gradient(() -> L(X_train, y_train), params(X_train))
+size(grad[X_train])
+
+#+
+
 using Plots
 
 opt = Descent(0.1)
@@ -58,4 +58,3 @@ for i in 1:max_iter
 end
 
 plot(acc_test, xlabel="Iteration", ylabel="Test accuracy", label="", ylim=(-0.01,1.01))
-```
