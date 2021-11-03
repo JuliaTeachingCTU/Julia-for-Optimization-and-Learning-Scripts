@@ -321,7 +321,7 @@ end
 gauss = Gauss()
 gauss(0)
 
-#+s
+#+
 
 step = 0.01
 x = -100:step:100;
