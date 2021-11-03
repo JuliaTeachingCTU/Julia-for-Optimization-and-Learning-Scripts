@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Optimal control
 # ## Computing trajectories with no control
 

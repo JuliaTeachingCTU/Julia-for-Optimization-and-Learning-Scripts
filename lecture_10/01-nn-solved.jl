@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Neural networks
 # ## Prepare data
 

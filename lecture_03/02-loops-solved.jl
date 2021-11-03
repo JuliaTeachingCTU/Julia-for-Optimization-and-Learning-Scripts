@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Loops
 # ## `for` and `while` loops
 

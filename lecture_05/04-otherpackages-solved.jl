@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Other Useful Packages
 # ## Distributions.jl
 

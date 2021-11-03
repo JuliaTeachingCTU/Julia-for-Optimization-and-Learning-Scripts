@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Introduction to Flux
 
 include(joinpath(pwd(), "lecture_11", "utilities.jl"))

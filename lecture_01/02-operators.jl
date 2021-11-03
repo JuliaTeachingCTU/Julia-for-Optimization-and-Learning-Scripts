@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Arithmetic operators
 
 1 + 2

@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # More complex networks
 # ## Preparing data
 

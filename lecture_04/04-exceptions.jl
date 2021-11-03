@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Exception handling
 
 function fact(n)

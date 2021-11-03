@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Methods
 
 product(x, y) = x * y

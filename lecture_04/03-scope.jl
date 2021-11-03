@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Scope of variables
 # ## Local scope
 

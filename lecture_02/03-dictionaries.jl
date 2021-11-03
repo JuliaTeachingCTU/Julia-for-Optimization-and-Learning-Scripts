@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Dictionaries
 
 d = Dict("a" => [1, 2, 3], "b" => 1)

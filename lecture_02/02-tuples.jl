@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Tuples
 
 t = (1, 2.0, "3")

@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Unconstrained Optimization
 # ## Visualization of gradients
 # 

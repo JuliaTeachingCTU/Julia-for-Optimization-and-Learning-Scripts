@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Linear regression with sparse constraints
 # ## Ridge regression
 

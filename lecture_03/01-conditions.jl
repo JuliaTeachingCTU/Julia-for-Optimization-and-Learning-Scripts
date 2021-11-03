@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Conditional evalutions
 # ## `if-elseif-else` statement
 

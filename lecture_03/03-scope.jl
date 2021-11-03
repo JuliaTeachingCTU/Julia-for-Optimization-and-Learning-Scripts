@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Soft Local Scope
 
 for i in 1:2

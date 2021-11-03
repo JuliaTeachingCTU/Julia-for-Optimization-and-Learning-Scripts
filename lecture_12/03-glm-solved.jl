@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Linear regression revisited
 # ## Hypothesis testing
 

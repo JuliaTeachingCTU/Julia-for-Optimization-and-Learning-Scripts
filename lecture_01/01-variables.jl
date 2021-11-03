@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Variables
 
 x = 2

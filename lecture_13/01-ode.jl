@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Wave equation
 # ## Solving the wave equation
 
