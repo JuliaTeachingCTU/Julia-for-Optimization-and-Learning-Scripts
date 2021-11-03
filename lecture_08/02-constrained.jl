@@ -1,6 +1,6 @@
-# Constrained Optimization
-## Numerical method
-```julia
+# # Constrained Optimization
+# ## Numerical method
+
 using Plots, Random
 
 function create_anim(
@@ -40,9 +40,13 @@ function create_anim(
     gif(anim, file_name; fps = fps, show_msg = false)
     return nothing
 end
-```
 
-```julia
+f(x) = sin(x[1] + x[2]) + cos(x[1])^2
+f(x1,x2) = f([x1;x2])
+g(x) = [cos(x[1] + x[2]) - 2*cos(x[1])*sin(x[1]); cos(x[1] + x[2])]
+
+#+
+
 function optim(f, g, P, x, α; max_iter=100)
     xs = zeros(length(x), max_iter+1)
     ys = zeros(length(x), max_iter)
@@ -54,6 +58,8 @@ function optim(f, g, P, x, α; max_iter=100)
     return xs, ys
 end
 
+#+
+
 P(x, x_min, x_max) = min.(max.(x, x_min), x_max)
 
 x_min = [-1; -1]
@@ -64,10 +70,14 @@ xs, ys = optim(f, g, x -> P(x,x_min,x_max), [0;-1], 0.1)
 xlims = (-3, 1)
 ylims = (-2, 1)
 
+#+
+
 create_anim(f, xs, xlims, ylims, "./lecture_08/anim6.gif";
     xbounds=(x_min[1], x_max[1]),
     ybounds=(x_min[2], x_max[2]),
 )
+
+#+
 
 xys = hcat(reshape([xs[:,1:end-1]; ys][:], 2, :), xs[:,end])
 
@@ -75,4 +85,3 @@ create_anim(f, xys, xlims, ylims, "./lecture_08/anim7.gif";
     xbounds=(x_min[1], x_max[1]),
     ybounds=(x_min[2], x_max[2]),
 )
-```
