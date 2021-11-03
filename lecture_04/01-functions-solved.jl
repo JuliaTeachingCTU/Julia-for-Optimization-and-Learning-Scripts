@@ -54,7 +54,23 @@ x3
 # ---
 # ### Solution:
 
+function power(x::Real, p::Integer)
+    if p == 0
+        return 1
+    elseif p > 0
+        return x * power(x, p - 1)
+    else
+        return power(1/x, -p)
+    end
+end
 
+#+
+
+power(2, 5)
+power(2, -2)
+power(2, 5) == 2^5
+power(5, -3) == 5^(-3)
+power(2, 2.5)
 
 # ---
 # 
@@ -89,7 +105,12 @@ g(3)
 # ---
 # ### Solution:
 
+even(x::Integer) = mod(x, 2) == 0 ? true : false
 
+#+
+
+even(11)
+even(14)
 
 # ---
 # 
@@ -138,7 +159,12 @@ g()
 # ---
 # ### Solution:
 
+q(x, y, a = 1, b = 2*a, c = 3*(a + b)) = a*x^2 + b*x*y + c*y^2
 
+#+ 
+
+q(4, 2)
+q(4, 2, 1, 2, 3)
 
 # ---
 # 
@@ -175,13 +201,40 @@ linear(2; a, b)
 # standardized normal distribution ($\mu = 0$ and $\sigma = 1$). Check that the inputs
 # are correct.
 #
-# Bonus: verify that this function is a probability density function, i.e., its integral
+# **Bonus:** verify that this function is a probability density function, i.e., its integral
 # equals 1.
 # 
 # ---
 # ### Solution:
 
+function gauss(x::Real; μ::Real = 0, σ::Real = 1)
+    σ^2 > 0 || error("the variance `σ^2` must be positive")
+    return exp(-1/2 * ((x - μ)/σ)^2)/(σ * sqrt(2*π))
+end
 
+#+
+
+gauss(0)
+gauss(0.1; μ = 1, σ = 1)
+
+#+
+
+step = 0.01
+x = -100:step:100;
+
+sum(gauss, x) * step
+
+g(x) = gauss(x; μ = -1, σ = 1.4);
+sum(g, x) * step
+
+#+
+
+using Plots
+x = -15:0.1:15
+
+plot(x, gauss.(x); label = "μ = 0, σ = 1", linewidth = 2, xlabel = "x", ylabel = "f(x)");
+plot!(x, gauss.(x; μ = 4, σ = 2); label = "μ = 4, σ = 2", linewidth = 2);
+plot!(x, gauss.(x; μ = -3, σ = 2); label = "μ = -3, σ = 2", linewidth = 2)
 
 # ---
 # 
@@ -236,7 +289,40 @@ roundmod(12.529, 5; sigdigits = 2)
 # ---
 # ### Solution:
 
+function wrapper(x...; type = :round, kwargs...)
+    if type == :ceil
+        return ceil(x...; kwargs...)
+    elseif type == :floor
+        return floor(x...; kwargs...)
+    else
+        return round(x...; kwargs...)
+    end
+end
 
+#+
+
+x = 1252.1518
+
+wrapper(Int64, x; type = :ceil)
+wrapper(Int16, x; type = :floor)
+wrapper(x; digits = 2)
+wrapper(x; sigdigits = 3)
+
+#+
+
+wrapper_new(x...; type = round, kwargs...) = type(x...; kwargs...)
+
+wrapper_new(1.123; type = ceil)
+wrapper_new(1.123; type = :ceil)
+
+#+
+
+x = 1252.1518
+
+wrapper_new(Int64, x; type = ceil)
+wrapper_new(Int16, x; type = floor)
+wrapper_new(x; digits = 2)
+wrapper_new(x; sigdigits = 3)
 
 # ---
 # 
@@ -334,6 +420,6 @@ plus.(x, 1)
 [-3, -6, -7] |> sum |> abs |> sqrt
 [-4, 9, -16] .|> abs .|> sqrt
 
-#+s
+#+
 
 ["a", "list", "of", "strings"] .|> [uppercase, reverse, titlecase, length]

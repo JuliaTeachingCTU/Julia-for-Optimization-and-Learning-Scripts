@@ -56,7 +56,12 @@ end
 # ---
 # ### Solution:
 
-
+function supertypes_tree(T::Type, level::Int = 0)
+    isequal(T, Any) && return
+    println(repeat("   ", level), T)
+    supertypes_tree(supertype(T), level + 1)
+    return
+end
 
 # ---
 
@@ -88,7 +93,11 @@ end
 # ---
 # ### Solution:
 
-
+function subtypes_tree(T::Type, level::Int = 0)
+    println(repeat("   ", level), T)
+    subtypes_tree.(subtypes(T), level + 1)
+    return
+end
 
 # ---
 
@@ -177,7 +186,13 @@ s2 = Doctoral(30000, 1, 0)
 # ---
 # ### Solution:
 
+salary_yearly(s::Student) = 12*salary_monthly(s)
 
+salary_monthly(s::Master) = s.salary
+salary_monthly(s::Doctoral) = s.salary + s.exam_mid*2000 + s.exam_english*1000
+
+println("The yearly salary is $(salary_yearly(s1)).")
+println("The yearly salary is $(salary_yearly(s2)).")
 
 # ---
 # 
