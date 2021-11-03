@@ -1,7 +1,6 @@
-# Linear regression with sparse constraints
-## Ridge regression
+# # Linear regression with sparse constraints
+# ## Ridge regression
 
-```julia
 using LinearAlgebra
 using Random
 using Plots
@@ -11,32 +10,33 @@ m = 1000
 
 Random.seed!(666)
 
+#+
+
 X = randn(n, m)
 y = 10*X[:,1] + X[:,2] + randn(n)
-```
 
-### Exercise:
-Implement the methods for the `ridge_reg` function. Verify that the result in the same result.
+# ### Exercise:
+# Implement the methods for the `ridge_reg` function. Verify that the result in the same
+# result.
+# 
+# **Hints:**
+# - The eigendecomposition can be found by `eigen(A)` or `eigen(A).values`.
+# - The identity matrix is implemented by `I` in the `LinearAlgebra` package.
+# 
+# ---
+# ### Solution:
 
-**Hints:**
-- The eigendecomposition can be found by `eigen(A)` or `eigen(A).values`.
-- The identity matrix is implemented by `I` in the `LinearAlgebra` package.
 
----
-### Solution:
-```julia
-# write the solution here
-```
----
 
-```julia
+# ---
+
 using BenchmarkTools
 
 @btime ridge_reg(X, y, 10);
 @btime ridge_reg(X, y, 10, Q, Q_inv, λ);
-```
 
-```julia
+#+
+
 μs = range(0, 1000; length=50)
 ws = hcat(ridge_reg.(Ref(X), Ref(y), μs, Ref(Q), Ref(Q_inv), Ref(λ))...)
 
@@ -46,11 +46,9 @@ plot(μs, abs.(ws');
     xlabel="mu",
     ylabel="weights: log scale",
 )
-```
 
-## Lasso
+# ## Lasso
 
-```julia
 S(x, η) = max(x-η, 0) - max(-x-η, 0)
 
 function lasso(X, y, μ, Q, Q_inv, λ;
@@ -68,9 +66,9 @@ function lasso(X, y, μ, Q, Q_inv, λ;
     end
     return w, u, z
 end
-```
 
-```julia
+#+
+
 ws = zeros(size(X,2), length(μs))
 
 for (i, μ) in enumerate(μs)
@@ -78,13 +76,10 @@ for (i, μ) in enumerate(μs)
     w, u, z = i > 1 ? lasso(X, y, μ, Q, Q_inv, λ; w, u, z) : lasso(X, y, μ, Q, Q_inv, λ)
     ws[:,i] = w
 end
-```
 
-```julia
 plot(μs, abs.(ws');
     label="",
     yscale=:log10,
     xlabel="mu",
     ylabel="weights: log scale",
 )
-```
