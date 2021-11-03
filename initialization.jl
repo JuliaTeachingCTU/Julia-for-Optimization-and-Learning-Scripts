@@ -1,9 +1,11 @@
+@info "Installing and precompiling packages"
+
 using Pkg
 Pkg.activate(@__DIR__)
 Pkg.instantiate()
+Pkg.precompile()
 
-
-ENV["DATADEPS_ALWAYS_ACCEPT"] = true
+Pkg.add(url="https://github.com/JuliaTeachingCTU/ImageInspector.jl", rev="master")
 
 using BSON
 using BenchmarkTools
@@ -14,7 +16,6 @@ using Distributions
 using Flux
 using GLM
 using GLPK
-using GR
 using HypothesisTests
 using Ipopt
 using JuMP
@@ -30,6 +31,12 @@ using SpecialFunctions
 using Statistics
 using StatsPlots
 
+@info "Downloading datasets"
+
+ENV["DATADEPS_ALWAYS_ACCEPT"] = true
+
 dataset("datasets", "iris"); # download iris dataset
 dataset("plm", "Snmesp"); # download Snmesp dataset
 MNIST.traindata();  # download MNIST dataset
+
+@info "Finished"
