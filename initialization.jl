@@ -37,6 +37,9 @@ ENV["DATADEPS_ALWAYS_ACCEPT"] = true
 
 dataset("datasets", "iris"); # download iris dataset
 dataset("plm", "Snmesp"); # download Snmesp dataset
+
 MNIST.traindata();  # download MNIST dataset
+FashionMNIST.traindata();  # download FashionMNIST dataset
+CIFAR10.traindata();  # download CIFAR10 dataset
 
 @info "Finished"
