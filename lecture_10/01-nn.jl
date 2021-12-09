@@ -25,19 +25,6 @@ y = iris.Species
 #---
 #### Solution:
 
-using Random
-
-function split(X, y::AbstractVector; dims=1, ratio_train=0.8, kwargs...)
-    n = length(y)
-    size(X, dims) == n || throw(DimensionMismatch("..."))
-
-    n_train = round(Int, ratio_train*n)
-    i_rand = randperm(n)
-    i_train = i_rand[1:n_train]
-    i_test = i_rand[n_train+1:end]
-
-    return selectdim(X, dims, i_train), y[i_train], selectdim(X, dims, i_test), y[i_test]
-end
 
 #+
 
