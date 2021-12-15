@@ -43,6 +43,7 @@ L(X_train, y_train)
 
 #+
 
+ps = params(m)
 grad = gradient(() -> L(X_train, y_train), params(X_train))
 size(grad[X_train])
 
