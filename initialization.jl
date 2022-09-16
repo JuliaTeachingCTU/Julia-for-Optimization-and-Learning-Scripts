@@ -1,45 +1,53 @@
 @info "Installing and precompiling packages"
 
-using Pkg
-Pkg.activate(@__DIR__)
-Pkg.instantiate()
-Pkg.precompile()
+@time begin
+    using Pkg
+    Pkg.activate(@__DIR__)
 
-Pkg.add(url="https://github.com/JuliaTeachingCTU/ImageInspector.jl", rev="master")
+    # removes ImageInspector if installed
+    if haskey(Pkg.project().dependencies, "ImageInspector")
+        Pkg.rm("ImageInspector")
+        Pkg.resolve()
+    end
 
-using BSON
-using BenchmarkTools
-using CSV
-using DataFrames
-using DifferentialEquations
-using Distributions
-using Flux
-using GLM
-using GLPK
-using HypothesisTests
-using Ipopt
-using JuMP
-using LinearAlgebra
-using MLDatasets
-using PkgTemplates
-using Plots
-using ProgressMeter
-using Query
-using RDatasets
-using Random
-using SpecialFunctions
-using Statistics
-using StatsPlots
+    Pkg.instantiate()
+    Pkg.precompile()
+    Pkg.add(url="https://github.com/JuliaTeachingCTU/ImageInspector.jl", rev="master")
 
-@info "Downloading datasets"
+    using BSON
+    using BenchmarkTools
+    using CSV
+    using DataFrames
+    using DifferentialEquations
+    using Distributions
+    using Flux
+    using GLM
+    using GLPK
+    using HypothesisTests
+    using Ipopt
+    using JuMP
+    using LinearAlgebra
+    using MLDatasets
+    using PkgTemplates
+    using Plots
+    using ProgressMeter
+    using Query
+    using RDatasets
+    using Random
+    using SpecialFunctions
+    using Statistics
+    using StatsPlots
 
-ENV["DATADEPS_ALWAYS_ACCEPT"] = true
+    @info "Downloading datasets"
 
-dataset("datasets", "iris"); # download iris dataset
-dataset("plm", "Snmesp"); # download Snmesp dataset
+    ENV["DATADEPS_ALWAYS_ACCEPT"] = true
 
-MNIST.traindata();  # download MNIST dataset
-FashionMNIST.traindata();  # download FashionMNIST dataset
-CIFAR10.traindata();  # download CIFAR10 dataset
+    dataset("datasets", "iris"); # download iris dataset
+    dataset("plm", "Snmesp"); # download Snmesp dataset
 
-@info "Finished"
+    MLDatasets.MNIST(Float32, :train)[:];  # download MNIST dataset
+    MLDatasets.FashionMNIST(Float32, :train)[:];  # download FashionMNIST dataset
+    MLDatasets.CIFAR10(Float32, :train)[:];  # download CIFAR10 dataset
+
+    @info "Finished"
+end
