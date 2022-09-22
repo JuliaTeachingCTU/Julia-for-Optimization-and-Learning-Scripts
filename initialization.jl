@@ -4,6 +4,11 @@
     using Pkg
     Pkg.activate(@__DIR__)
 
+    # remove Manifest.toml
+    if isfile("Manifest.toml")
+        rm("Manifest.toml")
+    end
+
     # removes ImageInspector if installed
     if haskey(Pkg.project().dependencies, "ImageInspector")
         Pkg.rm("ImageInspector")
