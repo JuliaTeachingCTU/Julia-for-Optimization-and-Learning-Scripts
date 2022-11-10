@@ -61,7 +61,7 @@ function optim(f, g, P, x, α; max_iter=100)
     return xs, ys
 end
 
-#+
+#
 
 P(x, x_min, x_max) = min.(max.(x, x_min), x_max)
 

@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 # # Gradients
 # ## Visualization of gradients
 #
