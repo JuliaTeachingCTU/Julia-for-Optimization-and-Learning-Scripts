@@ -20,7 +20,7 @@ X_train, y_train, X_test, y_test, classes = prepare_data(X', y; dims=2)
 
 # ## Creating the network
 
-using Flux: params
+using Flux
 
 n_hidden = 5
 m = Chain(
@@ -42,6 +42,8 @@ L(x, y) = crossentropy(m(x), y)
 L(X_train, y_train)
 
 #+
+
+using Flux: params
 
 ps = params(m)
 grad = gradient(() -> L(X_train, y_train), params(X_train))
