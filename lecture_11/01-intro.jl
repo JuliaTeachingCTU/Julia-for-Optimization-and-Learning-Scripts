@@ -20,7 +20,7 @@ X_train, y_train, X_test, y_test, classes = prepare_data(X', y; dims=2)
 
 # ## Creating the network
 
-using Flux
+using Flux: params
 
 n_hidden = 5
 m = Chain(
