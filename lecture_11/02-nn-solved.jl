@@ -126,7 +126,7 @@ batches2 = [(X_train[:, :, :, inds], y_train[:, inds]) for inds in partition(ran
 #+
 
 using Random
-using BSON
+using Flux: flatten
 
 Random.seed!(666)
 m = Chain(
@@ -146,6 +146,9 @@ using Flux: crossentropy
 L(X, y) = crossentropy(m(X), y)
 
 #+
+
+using BSON
+using Flux: params
 
 function train_model!(m, L, X, y;
         opt = Descent(0.1),
@@ -211,7 +214,7 @@ function train_or_load!(file_name, m, args...; force=false, kwargs...)
     end
 end
 
-file_name = joinpath(pwd(), "lecture_11", "data", "mnist_simple.bson")
+file_name = joinpath(pwd(), "lecture_11", "data", "mnist.bson")
 train_or_load!(file_name, m, L, X_train, y_train)
 
 "Test accuracy = " * string(accuracy(X_test, y_test)) |> println
