@@ -7,5 +7,5 @@ Manifest.toml
 *.bson
 
 # Allow
-!./data/mnist_simple.bson
-!./data/mnist.bson
+!*/data/mnist_simple.bson
+!*/data/mnist.bson
