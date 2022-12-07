@@ -8,3 +8,4 @@ Manifest.toml
 
 # Allow
 !./data/mnist_simple.bson
+!./data/mnist.bson
