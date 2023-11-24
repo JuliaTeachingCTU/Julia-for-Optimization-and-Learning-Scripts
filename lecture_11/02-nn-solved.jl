@@ -134,7 +134,7 @@ m = Chain(
     MaxPool((2,2)),
     Conv((2,2), 16=>8, relu),
     MaxPool((2,2)),
-    flatten,
+    Flux.flatten,
     Dense(288, size(y_train,1)),
     softmax,
 )
@@ -143,12 +143,11 @@ m = Chain(
 
 using Flux: crossentropy
 
-L(X, y) = crossentropy(m(X), y)
+L(model, X, y) = crossentropy(model(X), y)
 
 #+
 
 using BSON
-using Flux: params
 
 function train_model!(m, L, X, y;
         opt = Descent(0.1),
@@ -156,13 +155,14 @@ function train_model!(m, L, X, y;
         n_epochs = 10,
         file_name = "")
 
+    opt_state = Flux.setup(opt, m)
     batches = DataLoader((X, y); batchsize, shuffle = true)
 
     for _ in 1:n_epochs
-        Flux.train!(L, params(m), batches, opt)
+        Flux.train!(L, m, batches, opt_state)
     end
 
-    !isempty(file_name) && BSON.bson(file_name, m=m)
+    !isempty(file_name) && BSON.bson(file_name, m=m, opt_state=opt_state)
 
     return
 end
@@ -210,7 +210,7 @@ function train_or_load!(file_name, m, args...; force=false, kwargs...)
         train_model!(m, args...; file_name=file_name, kwargs...)
     else
         m_weights = BSON.load(file_name)[:m]
-        Flux.loadparams!(m, params(m_weights))
+        Flux.loadparams!(m, Flux.params(m_weights))
     end
 end
 
