@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_03")
 
 # # Plots.jl
 
@@ -288,7 +288,7 @@ for x in range(0, 6π; length = n)
     frame(anim)
 end
 
-gif(anim, joinpath(pwd(), "lecture_05", "animsincos.gif"), fps = 15)
+gif(anim, joinpath(pwd(), "lecture_03", "animsincos.gif"), fps = 15)
 
 #+
 
@@ -308,4 +308,4 @@ anim = @animate for i in vcat(30:60, 60:-1:30)
     plot!(plt, camera = (i, 65))
 end
 
-gif(anim, joinpath(pwd(), "lecture_05", "animsurf.gif"), fps = 15)
+gif(anim, joinpath(pwd(), "lecture_03", "animsurf.gif"), fps = 15)
