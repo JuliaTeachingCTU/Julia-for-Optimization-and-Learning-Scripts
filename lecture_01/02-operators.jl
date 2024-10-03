@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "lecture_01")
 
 # # Arithmetic operators
 

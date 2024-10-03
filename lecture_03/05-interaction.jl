@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd() * "/lecture_03")
+
 # Interaction with other languages
 
 mycompare(a, b)::Cint = sign(a - b)

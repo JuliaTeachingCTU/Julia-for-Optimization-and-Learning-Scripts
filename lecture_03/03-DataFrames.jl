@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_03")
 
 # # DataFrames.jl
 
@@ -30,8 +30,8 @@ df
 
 using CSV
 
-CSV.write(joinpath(pwd(), "lecture_05", "dataframe.csv"), df)
-table = CSV.read(joinpath(pwd(), "lecture_05", "dataframe.csv"), DataFrame; header = true)
+CSV.write(joinpath(pwd(), "lecture_03", "dataframe.csv"), df)
+table = CSV.read(joinpath(pwd(), "lecture_03", "dataframe.csv"), DataFrame; header = true)
 
 #+
 

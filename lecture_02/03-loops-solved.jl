@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_02")
 
 # # Loops
 # ## `for` and `while` loops
@@ -54,7 +54,29 @@ end
 # ---
 # ### Solution:
 
+i = 21
+if mod(i, 3) == 0 && mod(i, 7) == 0
+    println("$(i) is divisible by 3 and 7")
+end
 
+#+
+
+i = 21
+mod(i, 3) == mod(i, 7) == 0 && println("$(i) is divisible by 3 and 7")
+
+#+
+
+for i in 1:100
+    mod(i, 3) == mod(i, 7) == 0 && @show i
+end
+
+#+
+
+i = 0;
+while i <= 100
+    i += 1
+    mod(i, 3) == mod(i, 7) == 0 && @show i
+end
 
 # ---
 # 
@@ -81,7 +103,14 @@ end
 # ---
 # ### Solution:
 
+i = 0;
 
+while true
+    i += 1
+    i > 100 && break
+    mod(i, 3) == mod(i, 7) == 0 || continue
+    @show i
+end
 
 # ---
 # 
@@ -129,7 +158,19 @@ end
 # ---
 # ### Solution:
 
+x = [0.4, 2.3, 4.6]
+y = [1.4, -3.1, 2.4, 5.2]
+A = zeros(Float64, length(x), length(y))
 
+for i in 1:length(x), j in 1:length(y)
+    A[i, j] = exp((x[i]^2 - y[j]^2)/2)/2
+end
+A
+
+#+
+
+y_row = y'
+A = @. exp((x^2 - y_row^2)/2)/2
 
 # ---
 # 
@@ -156,7 +197,8 @@ A = Float32[exp((x^2 - y^2)/2)/2 for x in X, y in Y]
 # ---
 # ### Solution:
 
-
+v = [i for i in 1:100 if mod(i, 3) == mod(i, 7) == 0]
+sum(v)
 
 # ---
 # 
@@ -196,7 +238,16 @@ collect(gen)
 # ---
 # ### Solution:
 
+gen = (i^2 for i in 1:100 if mod(i, 3) == mod(i, 7) == 0);
+typeof(gen)
 
+#+
+
+sum(gen)
+
+#+ 
+
+sum(i^2 for i in 1:100 if mod(i, 3) == mod(i, 7) == 0)
 
 # ---
 # 
@@ -252,3 +303,13 @@ end
 # 
 # ---
 # ### Solution:
+
+for (i, row) in enumerate(eachrow(A))
+    println("Sum of all elements in a row $(i) is $(sum(row))")
+end
+
+#+
+
+for (i, row) in enumerate(eachcol(A))
+    println("Sum of all elements in a column $(i) is $(sum(row))")
+end

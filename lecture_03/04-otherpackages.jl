@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_03")
 
 # # Other Useful Packages
 # ## Distributions.jl
@@ -52,38 +52,7 @@ plot!(D; linewidth = 2, xlabel = "x", ylabel = "pdf(x)")
 # ---
 # ### Solution:
 
-Ds = Gamma.([2, 9, 7.5, 0.5], [2, 0.5, 1, 1])
-labels = reshape(string.("Gamma", params.(Ds)), 1, :)
 
-plot(Ds;
-    xaxis = ("x", (0, 20)),
-    yaxis = ("pdf(x)", (0, 0.5)),
-    labels = labels,
-    linewidth = 2,
-    legend = :topright,
-)
-
-#+
-
-plot(Ds;
-    func = cdf,
-    xaxis = ("x", (0, 20)),
-    yaxis = ("cdf(x)", (0, 1.05)),
-    labels = labels,
-    linewidth = 2,
-    legend = :bottomright,
-)
-
-#+
-
-cdfs = [x -> cdf(D, x) for D in Ds]
-plot(cdfs, 0, 20;
-    xaxis = ("x", (0, 20)),
-    yaxis = ("cdf(x)", (0, 1.05)),
-    labels = labels,
-    linewidth = 2,
-    legend = :bottomright,
-)
 
 # ---
 # 
