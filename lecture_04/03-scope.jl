@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_04")
 
 # # Scope of variables
 # ## Local scope
@@ -86,7 +86,7 @@ hcat(f_global(), f_local(x, y))
 
 #+
 
-a, b = 1:10, 11:20;
+x, y = 1:10, 11:20;
 
-@time f_local(a, b);
-@time f_local(a, b);
+@time f_local(x, y);
+@time f_local(x, y);
