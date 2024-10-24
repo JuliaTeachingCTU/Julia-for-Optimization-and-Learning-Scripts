@@ -76,7 +76,7 @@ Euro(1.5)
 # ## Conversion
 
 dollar2euro(c::Dollar) = Euro(0.83 * c.value)
-euro2dollar(c::Euro) = Euro(c.value / 0.83)
+euro2dollar(c::Euro) = Dollar(c.value / 0.83)
 
 #+
 
