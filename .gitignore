@@ -5,6 +5,7 @@ Manifest.toml
 *.gif
 *.csv
 *.bson
+*.ipynb_checkpoints
 
 # Allow
 !*/data/mnist_simple.bson
