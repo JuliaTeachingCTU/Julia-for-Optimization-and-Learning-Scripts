@@ -7,7 +7,20 @@ using Pkg
     for dir in lecture_dirs
         @info "$dir"
         Pkg.activate(dir)
-        Pkg.update()
+        
+        manifest_path = joinpath(dir, "Manifest.toml")
+        if isfile(manifest_path)
+            rm(manifest_path)
+        end
+
+        if haskey(Pkg.project().dependencies, "ImageInspector")
+            Pkg.rm("ImageInspector")
+            Pkg.resolve()
+            Pkg.add(url="https://github.com/JuliaTeachingCTU/ImageInspector.jl", rev="master")
+        end
+        
+        Pkg.instantiate()
+        Pkg.precompile()
     end
 
     @info "Downloading datasets ..."
