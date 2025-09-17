@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_12")
 
 # # Linear regression revisited
 # ## Hypothesis testing

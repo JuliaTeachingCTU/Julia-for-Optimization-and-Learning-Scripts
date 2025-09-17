@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_11")
 
 # # Introduction to Flux
 
@@ -68,4 +68,4 @@ end
 plot(acc_train, xlabel="Iteration", ylabel="Accuracy", label="train", ylim=(-0.01,1.01))
 plot!(acc_test, xlabel="Iteration", label="test", ylim=(-0.01,1.01))
 
-savefig("Iris_train_test_acc.svg")
+savefig(joinpath(pwd(), "lecture_11", "Iris_train_test_acc.svg"))

@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_12")
 
 # # Monte Carlo sampling
 # ## Gamma function
@@ -186,9 +186,6 @@ scatter([1], [e0]; label="Integral discretization", legend=:topleft);
 scatter!(2*ones(n_rep), e1; label="Generating from Distributions.jl");
 scatter!(3*ones(n_rep), e2; label="Generating from rejection sampling");
 scatter!(4*ones(n_rep), e3; label="Generating from other distribution")
-
-using Pkg
-Pkg.activate(pwd())
 
 # # How many samples do we need?
 # ### Exercise:

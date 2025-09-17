@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd() * "lecture_01")
+Pkg.activate(pwd() * "/lecture_01")
 
 # # Tuples
 

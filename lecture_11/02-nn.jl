@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_11")
 
 # # More complex networks
 # ## Preparing data
@@ -80,7 +80,7 @@ X_train, y_train, X_test, y_test = load_data(MLDatasets.MNIST; T=T, onehot=true)
 # ### Exercise:
 # Use the help of the function `DataLoader` to split the dataset into minibatches.
 #
-# **Hint**: It needs to be imported from Flux via `using Flux.Data: DataLoader`.
+# **Hint**: It needs to be imported from Flux via `using Flux: DataLoader`.
 #
 # ---
 # ### Solution:
@@ -159,7 +159,7 @@ end
 # Write a function `train_or_load!(file_name, m, args...; ???)` checking whether the file
 # `file_name` exists.
 # - If it exists, it loads it and then copies its parameters into `m` using the function
-# `Flux.loadparams!`.
+# `Flux.loadmodel!`.
 # - If it does not exist, it trains it using `train_model!`.
 # In both cases, the model `m` should be modified inside the `train_or_load!` function. Pay
 # special attention to the optional arguments `???`.

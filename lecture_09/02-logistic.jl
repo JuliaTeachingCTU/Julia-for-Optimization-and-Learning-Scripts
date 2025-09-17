@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_09")
 
 # # Logistic regression
 # ## Loading and preparing data

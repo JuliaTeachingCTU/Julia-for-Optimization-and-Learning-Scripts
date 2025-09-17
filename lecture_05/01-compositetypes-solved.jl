@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd() * "/lecture_05")
+
 # Abstract types
 
 Signed <: Integer
@@ -257,7 +260,7 @@ dim(p)
 # 
 # ## Default field values
 
-Base.@kwdef struct MyType
+@kwdef struct MyType
     a::Int # required keyword
     b::Float64 = 2.3
     c::String = "hello"
@@ -303,7 +306,7 @@ m("world")
 # ---
 # ### Solution:
 
-Base.@kwdef struct Gauss{T<:Real}
+@kwdef struct Gauss{T<:Real}
     μ::T = 0
     σ::T = 1
 
