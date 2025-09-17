@@ -3,6 +3,7 @@
 Manifest.toml
 
 *.gif
+*.svg
 *.csv
 *.bson
 
