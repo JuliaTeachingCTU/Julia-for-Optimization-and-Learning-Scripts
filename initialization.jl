@@ -1,58 +1,34 @@
-@info "Installing and precompiling packages"
+using Pkg
 
 @time begin
-    using Pkg
+    @info "Installing and compiling packages for all lectures ..."
+    lecture_dirs = filter(x -> isdir(x) && startswith(basename(x), "lecture"), readdir(".", join=true))
+
+    for dir in lecture_dirs
+        @info "$dir"
+        Pkg.activate(dir)
+        Pkg.update()
+    end
+
+    @info "Downloading datasets ..."
     Pkg.activate(@__DIR__)
-
-    # remove Manifest.toml
-    if isfile("Manifest.toml")
-        rm("Manifest.toml")
-    end
-
-    # removes ImageInspector if installed
-    if haskey(Pkg.project().dependencies, "ImageInspector")
-        Pkg.rm("ImageInspector")
-        Pkg.resolve()
-    end
-
-    Pkg.instantiate()
-    Pkg.precompile()
-    Pkg.add(url="https://github.com/JuliaTeachingCTU/ImageInspector.jl", rev="master")
-
-    using BSON
-    using BenchmarkTools
-    using CSV
-    using DataFrames
-    using DifferentialEquations
-    using Distributions
-    using Flux
-    using GLM
-    using GLPK
-    using HypothesisTests
-    using Ipopt
-    using JuMP
-    using LinearAlgebra
-    using MLDatasets
-    using PkgTemplates
-    using Plots
-    using ProgressMeter
-    using Query
-    using RDatasets
-    using Random
-    using SpecialFunctions
-    using Statistics
-    using StatsPlots
-
-    @info "Downloading datasets"
-
+    Pkg.add(["RDatasets", "MLDatasets"])
+    # so that downloads do not ask for confirmation
     ENV["DATADEPS_ALWAYS_ACCEPT"] = true
 
-    dataset("datasets", "iris"); # download iris dataset
-    dataset("plm", "Snmesp"); # download Snmesp dataset
-
+    using RDatasets
+    dataset("datasets", "iris");  # download iris dataset
+    dataset("plm", "Snmesp");  # download Snmesp dataset
+    
+    using MLDatasets
     MLDatasets.MNIST(Float32, :train)[:];  # download MNIST dataset
     MLDatasets.FashionMNIST(Float32, :train)[:];  # download FashionMNIST dataset
     MLDatasets.CIFAR10(Float32, :train)[:];  # download CIFAR10 dataset
+    
+    @info "Clearing up ..."
+    Pkg.activate()
+    rm(joinpath(@__DIR__, "Manifest.toml"))
+    rm(joinpath(@__DIR__, "Project.toml"))
 
-    @info "Finished"
-end
+    @info "Done"
+end # time
