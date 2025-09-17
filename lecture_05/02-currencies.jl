@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_05")
 
 # # Bank account
 

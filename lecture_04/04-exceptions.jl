@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_04")
 
 # # Exception handling
 
@@ -36,4 +36,5 @@ end
 #+
 
 fact_new("aaa")
+fact_new(-3)
 methods(fact_new)

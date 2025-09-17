@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_13")
 
 # # Optimal control
 # ## Computing trajectories with no control

@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_08")
 
 # # Unconstrained Optimization
 # ### Gradient Descent
@@ -20,7 +20,7 @@ Pkg.activate(pwd())
 
 # ---
 
-using Random
+using Plots, Random
 
 function create_anim(
     f,

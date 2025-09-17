@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_08")
 
 # # Unconstrained Optimization
 # ### Gradient Descent
@@ -28,7 +28,7 @@ end
 
 # ---
 
-using Random
+using Plots, Random
 
 function create_anim(
     f,
@@ -87,7 +87,11 @@ end
 # ---
 # ### Solution:
 
-x_gd = optim([], g, [0; -1], 0.1)
+f(x) = sin(x[1] + x[2]) + cos(x[1])^2
+g(x) = [cos(x[1] + x[2]) - 2*cos(x[1])*sin(x[1]); cos(x[1] + x[2])]
+f(x1,x2) = f([x1;x2])
+
+x_gd = optim(f, g, [0; -1], 0.1)
 
 xlims = (-3, 1)
 ylims = (-2, 1)

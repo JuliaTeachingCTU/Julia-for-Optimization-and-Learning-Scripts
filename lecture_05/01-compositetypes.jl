@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd() * "/lecture_05")
+
 # Abstract types
 
 Signed <: Integer
@@ -224,7 +227,7 @@ OrderedPair(2,1)
 # 
 # ## Default field values
 
-Base.@kwdef struct MyType
+@kwdef struct MyType
     a::Int # required keyword
     b::Float64 = 2.3
     c::String = "hello"

@@ -1,5 +1,5 @@
 using Pkg
-Pkg.activate(pwd())
+Pkg.activate(pwd() * "/lecture_13")
 
 # # Julia package
 # ## Introduction
@@ -66,11 +66,11 @@ plot(sol)
 
 #+
 
-plt1 = plot(sol, vars=(1,2,3), label="")
+plt1 = plot(sol, idxs=(1,2,3), label="")
 
 #+
 
-plot(sol, vars=(1,2,3), denseplot=false; label="")
+plot(sol, idxs=(1,2,3), denseplot=false; label="")
 
 #+
 
