@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_02")
+Pkg.instantiate()
 
 # # Conditional evalutions
 # ## `if-elseif-else` statement

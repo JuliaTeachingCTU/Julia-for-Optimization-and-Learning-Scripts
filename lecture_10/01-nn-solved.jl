@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_10")
+Pkg.instantiate()
 
 # # Neural networks
 # ## Prepare data

@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_11")
+Pkg.instantiate()
 
 # # More complex networks
 # ## Preparing data

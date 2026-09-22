@@ -1,10 +1,12 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_13")
+Pkg.instantiate()
 
 # # Julia package
 # ## Introduction
 
 using DifferentialEquations
+using OrdinaryDiffEqLowOrderRK
 
 f(u,p,t) = 0.98*u
 

@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_11")
+Pkg.instantiate()
 
 # # Introduction to Flux
 
@@ -31,10 +32,11 @@ m = Chain(
 
 #+
 
-using Flux: params
+# Flux.params has been deprecated in favor of Flux.trainable
+using Flux: trainable
 
 m(X_train)
-params(m[2])[2] .= [-1;0;1]
+trainable(m[2])[2] .= [-1;0;1]
 
 ## Training the network
 

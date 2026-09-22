@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_03")
+Pkg.instantiate()
 
 # # Other Useful Packages
 # ## Distributions.jl

@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_04")
+Pkg.instantiate()
 
 # # Methods
 

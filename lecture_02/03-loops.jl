@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_02")
+Pkg.instantiate()
 
 # # Loops
 # ## `for` and `while` loops

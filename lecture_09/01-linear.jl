@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_09")
+Pkg.instantiate()
 
 # # Linear regression
 # ## Loading and preparing data

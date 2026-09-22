@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_13")
+Pkg.instantiate()
 
 # # Julia package
 # ## Introduction

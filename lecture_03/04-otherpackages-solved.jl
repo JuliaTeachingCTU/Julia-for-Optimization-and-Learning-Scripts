@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_03")
+Pkg.instantiate()
 
 # # Other Useful Packages
 # ## Distributions.jl
@@ -53,7 +54,7 @@ plot!(D; linewidth = 2, xlabel = "x", ylabel = "pdf(x)")
 # ### Solution:
 
 Ds = Gamma.([2, 9, 7.5, 0.5], [2, 0.5, 1, 1])
-labels = reshape(string.("Gamma", params.(Ds)), 1, :)
+labels = reshape(string.("Gamma", Distributions.params.(Ds)), 1, :)
 
 plot(Ds;
     xaxis = ("x", (0, 20)),

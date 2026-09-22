@@ -33,6 +33,9 @@ function prepare_data(X, y; do_normal=true, do_onehot=true, kwargs...)
         y_test = onehot(y_test, classes)
     end
 
+    X_train = convert(Array{Float32}, X_train)
+    X_test = convert(Array{Float32}, X_test)
+
     return X_train, y_train, X_test, y_test, classes
 end
 

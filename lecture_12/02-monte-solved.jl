@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_12")
+Pkg.instantiate()
 
 # # Monte Carlo sampling
 # ## Gamma function

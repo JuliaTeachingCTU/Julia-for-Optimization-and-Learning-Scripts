@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_04")
+Pkg.instantiate()
 
 # # Scope of variables
 # ## Local scope
@@ -69,11 +70,24 @@ foo(1)
 
 #+
 
-x = rand(10);
-y = rand(10);
+x = rand(10^6);
+y = rand(10^6);
 
-f_global() = x .+ y
-f_local(x, y) = x .+ y
+function f_global()
+    z = similar(x)
+    for i in eachindex(x, y)
+        z[i] = x[i] + y[i]
+    end
+    return z
+end
+
+function f_local(x, y)
+    z = similar(x)
+    for i in eachindex(x, y)
+        z[i] = x[i] + y[i]
+    end
+    return z
+end
 
 #+
 
@@ -81,12 +95,18 @@ hcat(f_global(), f_local(x, y))
 
 #+
 
+# The first call also includes compilation time, so we call each function
+# once before timing it.
+
+f_global();
+f_local(x, y);
+
 @time f_global();
 @time f_local(x, y);
 
 #+
 
-x1, x2 = 1:10, 11:20;
+x1, x2 = 1:10^6, (10^6+1):2*10^6;
 
 @time f_local(x1, x2);
 @time f_local(x1, x2);

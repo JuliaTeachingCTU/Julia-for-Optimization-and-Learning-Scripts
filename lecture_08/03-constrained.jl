@@ -1,5 +1,6 @@
 using Pkg
 Pkg.activate(pwd() * "/lecture_08")
+Pkg.instantiate()
 
 # # Constrained Optimization
 # ## Numerical method
